@@ -1,34 +1,18 @@
 #include <Arduino.h>
 
 #include <Adafruit_GFX.h>
-// #include <Adafruit_SSD1306.h>
 #include <SPI.h>
-// #include <Wire.h>
 
 #include <Adafruit_SSD1331.h>
 #include <SPI.h>
 
 // #include <Audio.h>
 
-// // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-// #define OLED_RESET 4 // Reset pin # (or -1 if sharing Arduino reset pin)
-
-// #define SCREEN_W 128 // OLED display width, in pixels
-// #define SCREEN_H 64 // OLED display height, in pixels
-
-// Adafruit_SSD1306 display(SCREEN_W, SCREEN_H, &Wire, OLED_RESET);
-
 // AudioOutputMQS audioOut;
 
 // AudioSynthWaveform waveform1; // xy=188,240
 // AudioEffectEnvelope envelope1; // xy=371,237
 // AudioConnection patchCordMixerKick(waveform1, audioOut);
-
-// #define sclk 13
-// #define mosi 11
-// #define cs 10
-// #define rst 9
-// #define dc 8
 
 #define sclk 9
 #define mosi 11
@@ -46,20 +30,6 @@ void setup()
     // put your setup code here, to run once:
     Serial.begin(115200);
     Serial.println("Start teensy zic tracker");
-
-    // if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
-    //     Serial.println(F("SSD1306 allocation failed"));
-    //     for (;;)
-    //         ; // Don't proceed, loop forever
-    // }
-
-    // display.clearDisplay();
-    // display.setTextColor(WHITE);
-    // display.setTextSize(1);
-    // display.setCursor(0, 0);
-
-    // display.println("Init synth 2...");
-    // display.display();
 
     display.begin();
     display.fillScreen(BLACK);
