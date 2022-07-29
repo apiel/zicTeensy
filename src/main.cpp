@@ -26,12 +26,15 @@ AudioConnection patchCordMixerKick(waveform1, audioOut);
 App_Patterns patterns;
 App app(&patterns);
 
+#define TEXT_SIZE 1
+
 void render(App_Display* display)
 {
     tft.fillScreen(UI_COLOR_BG);
-    tft.setTextColor(UI_COLOR_FONT);
     tft.setCursor(0, 0);
-    tft.print(display->text);
+    // tft.setTextColor(UI_COLOR_FONT);
+    // tft.print(display->text);
+    draw_string(display, 2, TEXT_SIZE * FONT_H, TEXT_SIZE);
 }
 
 void setup()
