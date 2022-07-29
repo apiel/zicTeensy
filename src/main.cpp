@@ -1,11 +1,5 @@
 #include <Arduino.h>
 
-#include <Adafruit_GFX.h>
-#include <SPI.h>
-
-#include <Adafruit_SSD1331.h>
-#include <SPI.h>
-
 #include <Audio.h>
 
 #define SAMPLE_RATE 48000
@@ -21,42 +15,23 @@
 #include "../lib/zicTracker/app_display.h"
 #include "../lib/zicTracker/app_patterns.h"
 
+#include "./tft.h"
+
 AudioOutputMQS audioOut;
 
 AudioSynthWaveform waveform1; // xy=188,240
 AudioEffectEnvelope envelope1; // xy=371,237
 AudioConnection patchCordMixerKick(waveform1, audioOut);
 
-#define sclk 9
-#define mosi 11
-#define rst 13
-#define dc 22 
-#define cs 23
-
-uint16_t rgb565(uint8_t r, uint8_t g, uint8_t b)
-{
-    return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
-}
-
-#define UI_COLOR_BG rgb565(0, 0, 0)
-#define UI_COLOR_FONT rgb565(0xFF, 0xFF, 0xFF)
-#define UI_COLOR_LABEL rgb565(150, 150, 150)
-#define UI_COLOR_HEADER rgb565(100, 100, 100)
-#define UI_COLOR_PLAY rgb565(122, 255, 0)
-#define UI_COLOR_STAR rgb565(255, 255, 0)
-#define UI_COLOR_CURSOR rgb565(0, 122, 255)
-
-Adafruit_SSD1331 d = Adafruit_SSD1331(cs, dc, mosi, sclk, rst);
-
 App_Patterns patterns;
 App app(&patterns);
 
 void render(App_Display* display)
 {
-    d.fillScreen(UI_COLOR_BG);
-    d.setTextColor(UI_COLOR_FONT);
-    d.setCursor(0, 0);
-    d.print(display->text);
+    tft.fillScreen(UI_COLOR_BG);
+    tft.setTextColor(UI_COLOR_FONT);
+    tft.setCursor(0, 0);
+    tft.print(display->text);
 }
 
 void setup()
@@ -65,12 +40,7 @@ void setup()
     Serial.begin(115200);
     Serial.println("Start teensy zic tracker");
 
-    d.begin();
-    d.fillScreen(UI_COLOR_BG);
-
-    d.setTextColor(UI_COLOR_FONT);
-    d.setCursor(0, 0);
-    d.print("Zic Tracker");
+    init_tft();
 
     AudioMemory(25);
 
