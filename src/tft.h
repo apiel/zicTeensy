@@ -18,8 +18,6 @@
 #include "fontData4.h"
 #define LINE_SPACING 2
 
-#define COLOR_SYMBOL '~'
-
 uint16_t fontColor = 0;
 
 #define sclk 9
