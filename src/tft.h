@@ -41,6 +41,7 @@ void init_tft()
     tft.print("Zic Tracker");
 }
 
+// Could be boolean and use it to draw char process...
 void draw_pixel(int16_t x, int16_t y, uint16_t color)
 {
     if (x < 0 || x >= SCREEN_W || y < 0 || y >= SCREEN_H) {
@@ -104,10 +105,9 @@ void draw_string(App_Display* display, uint16_t x, uint16_t y)
                 resetColor(display, y);
             }
 
-// FIXME
-            // if (display->cursorLen && text >= display->cursorPos && text < display->cursorPos + display->cursorLen) {
-            //     tft.fillRect(x - 2, y, FONT_W, FONT_H, UI_COLOR_CURSOR);
-            // }
+            if (display->cursorLen && text >= display->cursorPos && text < display->cursorPos + display->cursorLen) {
+                tft.fillRect(x, y, FONT_W, FONT_H, UI_COLOR_CURSOR);
+            }
 
             draw_char(*text, x, y);
             x += FONT_W; //;
