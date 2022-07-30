@@ -31,10 +31,10 @@ App app(&patterns);
 void render(App_Display* display)
 {
     tft.fillScreen(UI_COLOR_BG);
-    tft.setCursor(0, 0);
+    // tft.setCursor(0, 0);
     // tft.setTextColor(UI_COLOR_FONT);
     // tft.print(display->text);
-    draw_string(display, 2, TEXT_SIZE * FONT_H, TEXT_SIZE);
+    draw_string(display, 0, TEXT_SIZE * FONT_H, TEXT_SIZE);
 }
 
 void setup()

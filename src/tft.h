@@ -6,13 +6,19 @@
 
 #include <Adafruit_SSD1331.h>
 
+#include <Fonts/Picopixel.h>
+
 #include "../lib/zicTracker/app.h"
 #include "color.h"
-#include "fontData.h"
 
-#define FONT_H 8
-#define FONT_W 8
-#define LINE_SPACING 8
+// #include "fontData.h"
+// #define LINE_SPACING 8
+
+// #include "fontData2.h"
+// #define LINE_SPACING 8
+
+#include "fontData4.h"
+#define LINE_SPACING 4
 
 #define COLOR_SYMBOL '~'
 
@@ -32,7 +38,7 @@ Adafruit_SSD1331 tft = Adafruit_SSD1331(cs, dc, mosi, sclk, rst);
 void init_tft()
 {
     tft.begin();
-    // tft.setFont(&Picopixel);
+    tft.setFont(&Picopixel);
     tft.fillScreen(UI_COLOR_BG);
 
     tft.setTextColor(UI_COLOR_FONT);
@@ -40,21 +46,45 @@ void init_tft()
     tft.print("Zic Tracker");
 }
 
-void draw_char(unsigned char symbol, uint16_t x, uint16_t y, uint8_t size)
+void draw_char(unsigned char chr, uint16_t x, uint16_t y, uint8_t size)
 {
-    x += (FONT_H - 1) * 1;
-    if (symbol > 127) {
-        symbol -= 128;
+    x += FONT_H - 1;
+    if (chr > 127) {
+        chr -= 128;
     }
-    const unsigned char* ptr = fontData + symbol * FONT_H;
+    const unsigned char* ptr = fontData + (chr - FONT_ASCII_START) * FONT_H;
 
-    for (int i = 0, ys = 0; i < FONT_W; i++, ptr++, ys += 1) {
-        for (int col = FONT_H - FONT_W, xs = x - col; col < FONT_H; col++, xs -= 1) {
-            if ((*ptr & 1 << col) && y + ys < SCREEN_H && xs < SCREEN_W) {
-                tft.fillRect(xs * size, y + ys * size, size, size, fontColor);
+    // for (int i = 0, ys = 0; i < FONT_W; i++, ptr++, ys += 1) {
+    //     for (int col = FONT_H - FONT_W, xs = x - col; col < FONT_H; col++, xs -= 1) {
+    //         if ((*ptr & 1 << col) && y + ys < SCREEN_H && xs < SCREEN_W) {
+    //             tft.fillRect(xs * size, y + ys * size, size, size, fontColor);
+    //         }
+    //     }
+    // }
+
+    for (int i = 0; i < FONT_H; i++, ptr++) {
+        for (int j = 7; j >= 0; --j) {
+            if ((*ptr >> j) & 1) {
+                tft.fillRect(x + (7 - j), y + i, size, size, fontColor);
             }
+
+            // if ((*ptr & (1 << j)) && y + i < SCREEN_H && x + j < SCREEN_W) {
+            //     tft.fillRect(x + j * size, y + i * size, size, size, fontColor);
+            // }
         }
     }
+
+    //     /*
+    //  * code=65, hex=0x41, ascii="A"
+    //  */
+    // 0x00, /* 00000 */
+    // 0x00, /* 00000 */
+    // 0x60, /* 01100 */
+    // 0x90, /* 10010 */
+    // 0xF0, /* 11110 */
+    // 0x90, /* 10010 */
+    // 0x90, /* 10010 */
+    // 0x00, /* 00000 */
 }
 
 uint8_t getRow(App_Display* display, uint16_t y, uint8_t size)

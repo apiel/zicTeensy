@@ -3,7 +3,12 @@
 
 #include <stdint.h>
 
-// static const unsigned char fontData[] = {
+#define FONT_W 8
+#define FONT_H 8
+#define FONT_ASCII_START 0
+
+// GLCD Font Creator ?
+
 static uint8_t fontData[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* Char 000 (.) */
     0x7E, 0x81, 0xA5, 0x81, 0xBD, 0x99, 0x81, 0x7E, /* Char 001 (.) */
