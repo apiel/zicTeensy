@@ -6,8 +6,6 @@
 
 #include <Adafruit_SSD1331.h>
 
-#include <Fonts/Picopixel.h>
-
 #include "../lib/zicTracker/app.h"
 #include "color.h"
 
@@ -18,7 +16,7 @@
 // #define LINE_SPACING 8
 
 #include "fontData4.h"
-#define LINE_SPACING 4
+#define LINE_SPACING 2
 
 #define COLOR_SYMBOL '~'
 
@@ -38,7 +36,6 @@ Adafruit_SSD1331 tft = Adafruit_SSD1331(cs, dc, mosi, sclk, rst);
 void init_tft()
 {
     tft.begin();
-    tft.setFont(&Picopixel);
     tft.fillScreen(UI_COLOR_BG);
 
     tft.setTextColor(UI_COLOR_FONT);
