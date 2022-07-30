@@ -52,6 +52,8 @@ void draw_pixel(int16_t x, int16_t y, uint16_t color)
 }
 
 // TODO use this version in SDL
+// We could put drawPixel and drawRect part of App_Display
+// Or create a Font class and extend it with drawPixel and drawRect
 void draw_char(unsigned char chr, uint16_t x, uint16_t y)
 {
     const unsigned char* ptr = fontData + (chr - FONT_ASCII_START) * FONT_H;

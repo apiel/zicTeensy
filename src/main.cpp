@@ -15,7 +15,8 @@
 #include "../lib/zicTracker/app_display.h"
 #include "../lib/zicTracker/app_patterns.h"
 
-#include "./tft.h"
+// #include "./tft.h"
+#include "./display.h"
 
 AudioOutputMQS audioOut;
 
@@ -23,14 +24,9 @@ AudioSynthWaveform waveform1; // xy=188,240
 AudioEffectEnvelope envelope1; // xy=371,237
 AudioConnection patchCordMixerKick(waveform1, audioOut);
 
+UI_Display display;
 App_Patterns patterns;
-App app(&patterns);
-
-void render(App_Display* display)
-{
-    tft.fillScreen(UI_COLOR_BG);
-    draw_string(display, 0, 0);
-}
+App app(&patterns, &display);
 
 void setup()
 {
@@ -38,7 +34,7 @@ void setup()
     Serial.begin(115200);
     Serial.println("Start teensy zic tracker");
 
-    init_tft();
+    display.init();
 
     AudioMemory(25);
 
@@ -50,7 +46,7 @@ void setup()
     envelope1.release(250);
 
     app.start();
-    render(app.render());
+    app.render();
 }
 
 void loop()
