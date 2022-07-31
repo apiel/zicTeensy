@@ -8,11 +8,11 @@
 
 #include "../lib/zicTracker/app_display.h"
 
-#define sclk 9
-#define mosi 11
-#define rst 13
-#define dc 22
-#define cs 23
+#define sclk 32 // 9 -> SCL
+#define mosi 26 // 11 -> SDA
+#define rst 27 // 13 -> RES
+#define dc 31 // 22 -> DC
+#define cs 30 // 23 -> CS
 
 #define SCREEN_W 96
 #define SCREEN_H 64
