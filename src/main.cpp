@@ -27,13 +27,38 @@ AudioOutputMQS audioOut;
 // AudioOutputUSB audioOut;
 // AudioOutputI2S audioOut;
 
-AudioSynthWaveform waveform1; // xy=188,240
-AudioEffectEnvelope envelope1; // xy=371,237
-AudioConnection patchCordMixerKick(waveform1, audioOut);
-
 UI_Display display;
 App_Patterns patterns;
 App app(&patterns, &display);
+
+// To be tested
+class UI_Audio : public AudioStream {
+public:
+    UI_Audio()
+        : AudioStream(0, NULL)
+    {
+    }
+
+    void update(void)
+    {
+        audio_block_t* block;
+
+        block = allocate();
+        if (block) {
+            for (uint16_t i = 0; i < AUDIO_BLOCK_SAMPLES; i++) {
+                // block->data[i] = app.sample() >> 16; ??
+                block->data[i] = app.sample();
+            }
+            transmit(block);
+            release(block);
+        }
+    }
+};
+
+// AudioSynthWaveform waveform1; // xy=188,240
+// AudioEffectEnvelope envelope1; // xy=371,237
+UI_Audio uiAudio;
+AudioConnection patchCordMixer(uiAudio, audioOut);
 
 void setup()
 {
@@ -45,13 +70,13 @@ void setup()
 
     AudioMemory(25);
 
-    waveform1.pulseWidth(0.5);
+    // waveform1.pulseWidth(0.5);
     // waveform1.pulseWidth(400);
-    waveform1.begin(0.4, 220, WAVEFORM_PULSE);
+    // waveform1.begin(0.4, 220, WAVEFORM_PULSE);
 
-    envelope1.attack(50);
-    envelope1.decay(50);
-    envelope1.release(250);
+    // envelope1.attack(50);
+    // envelope1.decay(50);
+    // envelope1.release(250);
 
     app.start();
     app.render();
