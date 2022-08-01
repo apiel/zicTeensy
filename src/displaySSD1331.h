@@ -14,6 +14,12 @@
 #define dc 31 // 22 -> DC
 #define cs 30 // 23 -> CS
 
+// #define sclk 9 //-> SCL
+// #define mosi 11 //-> SDA
+// #define rst 13 //-> RES
+// #define dc 22 //-> DC
+// #define cs 23 //-> CS
+
 #define SCREEN_W 96
 #define SCREEN_H 64
 

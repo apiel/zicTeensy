@@ -2,6 +2,8 @@
 
 #include <Audio.h>
 
+// #define FONT_FILE "./fonts/fontData8x8.h"
+
 // #define SAMPLE_RATE 48000
 // // #define CHANNELS 1
 // #define CHANNELS 2 // to be fixed
@@ -15,11 +17,15 @@
 #include "../lib/zicTracker/app_display.h"
 #include "../lib/zicTracker/app_patterns.h"
 
-// #include "./tft.h"
-#include "./display.h"
+#ifdef DISPLAY_SSD1331
+#include "./displaySSD1331.h"
+#else
+#include "./displaySSD1306.h"
+#endif
 
 AudioOutputMQS audioOut;
 // AudioOutputUSB audioOut;
+// AudioOutputI2S audioOut;
 
 AudioSynthWaveform waveform1; // xy=188,240
 AudioEffectEnvelope envelope1; // xy=371,237
@@ -67,6 +73,9 @@ void loop()
     // delay(100);
     // envelope1.noteOff();
     // delay(100);
+
+
+    // TOFO use external usb keyboard
 
     // uint8_t keys = 0;
     // uint8_t bit = 0;
